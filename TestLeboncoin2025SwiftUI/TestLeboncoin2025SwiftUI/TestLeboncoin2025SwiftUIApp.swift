@@ -11,7 +11,7 @@ import SwiftUI
 struct TestLeboncoin2025SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CoordinatorView()
         }
     }
 }
