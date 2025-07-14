@@ -15,6 +15,7 @@ final class ListCoordinator: ParentCoordinator {
     private var builder: ListBuilder
     private let testMode: Bool
     weak var parentCoordinator: Coordinator?
+    var childCoordinators = [Coordinator]()
 
     init(testMode: Bool = false) {
         self.builder = ListBuilder()
@@ -31,7 +32,7 @@ final class ListCoordinator: ParentCoordinator {
     
     func start() -> some View {
         print("[ListCoordinator] Création de la vue liste.")
-        print("Parent: \(parentCoordinator)")
+        // print("Parent: \(parentCoordinator)")
         builder.buildModule(testMode: testMode, coordinator: self)
         let viewModel = builder.getModule()
         return ListView(viewModel: viewModel)
@@ -39,13 +40,13 @@ final class ListCoordinator: ParentCoordinator {
     
     func goToDetailView(with item: ItemViewModel) {
         print("[ListCoordinator] Vers le DetailView")
-        print("Parent: \(parentCoordinator)")
-        parentCoordinator?.push(page: .detail(ItemViewModel.getFakeItem()))
+        // print("Parent: \(parentCoordinator)")
+        parentCoordinator?.push(page: .detail(item))
     }
     
-    func goToFilterView() {
+    func goToFilterView(with categories: [ItemCategoryViewModel]) {
         print("[ListCoordinator] Vers le FilterView")
-        print("Parent: \(parentCoordinator)")
-        parentCoordinator?.push(page: .filter)
+        // print("Parent: \(parentCoordinator)")
+        parentCoordinator?.push(page: .filter(categories))
     }
 }

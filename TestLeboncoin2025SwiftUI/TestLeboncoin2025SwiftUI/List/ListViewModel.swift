@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 @Observable final class ListViewModel {
-    var coordinator: ListCoordinator?
+    weak var coordinator: ListCoordinator?
     
     private var itemsViewModels: [ItemViewModel] = []
     private var itemCategories: [ItemCategoryViewModel] = []
@@ -37,6 +37,13 @@ import Combine
         itemsViewModels = ItemViewModel.getFakeItems()
         filteredItemsViewModels = itemsViewModels
         
+        itemCategories = [
+            ItemCategoryViewModel(id: 0, name: "Toutes catégories"),
+            ItemCategoryViewModel(id: 1, name: "Multimédia"),
+            ItemCategoryViewModel(id: 2, name: "Immobilier"),
+            ItemCategoryViewModel(id: 3, name: "Alimentation"),
+            ItemCategoryViewModel(id: 4, name: "Automobile")
+        ]
         
         print("ListViewModel initialisé.")
     }
@@ -132,6 +139,9 @@ import Combine
         return filteredItemsViewModels
     }
     
+    func getItemCategories() -> [ItemCategoryViewModel] {
+        return itemCategories
+    }
     /*/
     func getItemViewModel(at indexPath: IndexPath) -> ItemViewModel? {
         // On vérifie bien qu'il y a au moins une cellule dans la liste après filtrage, sinon ça il y aura un crash
@@ -157,6 +167,6 @@ extension ListViewModel {
     }
     
     func goToFilterView() {
-        coordinator?.goToFilterView()
+        coordinator?.goToFilterView(with: itemCategories)
     }
 }

@@ -19,7 +19,6 @@ final class ListBuilder: ModuleBuilder {
     
         // Les injections des couches se feront ici
         listViewModel.coordinator = coordinator as? ListCoordinator
-        print("Coordinator on VM: \(listViewModel.coordinator)")
     }
     
     func getModule() -> ListViewModel {

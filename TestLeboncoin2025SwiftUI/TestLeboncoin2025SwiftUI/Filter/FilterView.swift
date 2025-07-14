@@ -8,14 +8,47 @@
 import SwiftUI
 
 struct FilterView: View {
-    // @Environment(AppCoordinator.self) var coordinator: AppCoordinator
+    @Bindable var viewModel: FilterViewModel
     
     var body: some View {
-        Text("FilterView")
-            .foregroundStyle(.green)
+        VStack {
+            List {
+                ForEach(viewModel.itemCategories.indices, id: \.self) { index in
+                    let item = viewModel.itemCategories[index]
+                    
+                    HStack {
+                        Text(item.name)
+                        Spacer()
+                        if index == viewModel.currentSelectedIndex {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if index != viewModel.currentSelectedIndex {
+                            viewModel.saveSelectedCategory(at: index)
+                        }
+                    }
+                    .accessibilityIdentifier("category_\(index)")
+                }
+            }
+            .navigationTitle("Catégories")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                viewModel.loadSetting()
+            }
+            .onDisappear {
+                viewModel.backToPreviousScreen()
+            }
+        }
     }
 }
 
-#Preview {
-    FilterView()
+#if DEBUG
+@available(iOS 17.0, *)
+#Preview("FilterView") {
+    let vm = FilterViewModel(itemCategories: ItemCategoryViewModel.getFakeItemCategories())
+    FilterView(viewModel: vm)
 }
+#endif

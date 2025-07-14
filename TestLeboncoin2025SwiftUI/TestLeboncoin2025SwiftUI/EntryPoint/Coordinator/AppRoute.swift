@@ -8,5 +8,5 @@
 enum AppRoute: Hashable {
     case list
     case detail(ItemViewModel)
-    case filter
+    case filter([ItemCategoryViewModel])
 }

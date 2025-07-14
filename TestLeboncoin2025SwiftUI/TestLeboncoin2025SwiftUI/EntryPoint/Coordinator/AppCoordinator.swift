@@ -12,6 +12,11 @@ import Observation
     var path = [AppRoute]()
     
     private let listCoordinator = ListCoordinator()
+    var childCoordinators = [Coordinator]()
+    
+    init() {
+        addChildCoordinator(childCoordinator: listCoordinator)
+    }
     
     func start() -> some View {
         print("[AppCoordinator] START")
@@ -23,12 +28,28 @@ import Observation
     
     @ViewBuilder func destination(page: AppRoute) -> some View {
         switch page {
-        case .detail:
-            DetailView()
-        case .filter:
-            FilterView()
+        case .detail(let itemViewModel):
+            let detailCoordinator = DetailCoordinator(testMode: false, viewModel: itemViewModel)
+            getDetailView(with: detailCoordinator)
+        case .filter(let itemCategories):
+            let filterCoordinator = FilterCoordinator(testMode: false, categories: itemCategories)
+            getFilterView(with: filterCoordinator)
         default:
             EmptyView()
         }
+    }
+    
+    // Type '()' cannot conform to 'View'
+    func getDetailView(with detailCoordinator: DetailCoordinator) -> some View {
+        detailCoordinator.parentCoordinator = self
+        addChildCoordinator(childCoordinator: detailCoordinator) // Ajoutez-le comme enfant ici
+        return detailCoordinator.start()
+    }
+    
+    // Type '()' cannot conform to 'View'
+    func getFilterView(with filterCoordinator: FilterCoordinator) -> some View {
+        filterCoordinator.parentCoordinator = self
+        addChildCoordinator(childCoordinator: filterCoordinator) // Ajoutez-le comme enfant ici
+        return filterCoordinator.start()
     }
 }

@@ -36,7 +36,7 @@ struct ListView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    viewModel.coordinator?.goToFilterView()
+                    viewModel.coordinator?.goToFilterView(with: viewModel.getItemCategories())
                 } label: {
                     Image(systemName: "list.bullet")
                 }

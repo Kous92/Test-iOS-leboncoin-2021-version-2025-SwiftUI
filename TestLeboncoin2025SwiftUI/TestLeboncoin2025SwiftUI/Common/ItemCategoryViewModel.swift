@@ -5,7 +5,7 @@
 //  Created by Koussaïla Ben Mamar on 30/06/2025.
 //
 
-struct ItemCategoryViewModel: Sendable {
+struct ItemCategoryViewModel: Sendable, Identifiable, Hashable {
     let id: Int
     let name: String
     private(set) var isSaved: Bool = false
