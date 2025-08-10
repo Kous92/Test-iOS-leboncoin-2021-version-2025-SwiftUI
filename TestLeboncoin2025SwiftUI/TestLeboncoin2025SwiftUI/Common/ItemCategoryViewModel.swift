@@ -10,13 +10,12 @@ struct ItemCategoryViewModel: Sendable, Identifiable, Hashable {
     let name: String
     private(set) var isSaved: Bool = false
     
-    init(id: Int, name: String) {
+    nonisolated init(id: Int, name: String) {
         self.id = id
         self.name = name
     }
     
-    /*¨
-    init(with itemCategory: ItemCategoryDTO) {
+    nonisolated init(with itemCategory: ItemCategoryDTO) {
         self.id = itemCategory.id
         self.name = itemCategory.name
     }
@@ -24,7 +23,6 @@ struct ItemCategoryViewModel: Sendable, Identifiable, Hashable {
     func getDTO() -> ItemCategoryDTO {
         return ItemCategoryDTO(with: self)
     }
-     */
 }
 
 extension ItemCategoryViewModel {

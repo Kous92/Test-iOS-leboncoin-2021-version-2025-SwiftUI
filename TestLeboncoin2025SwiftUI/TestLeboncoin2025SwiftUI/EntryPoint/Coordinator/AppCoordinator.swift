@@ -14,16 +14,24 @@ import Observation
     private let listCoordinator = ListCoordinator()
     var childCoordinators = [Coordinator]()
     
+    // Une variable d'état pour la vue racine, qui sera créée une seule fois.
+    private var _rootView: AnyView
+    
     init() {
+        _rootView = AnyView(listCoordinator.start())
+        listCoordinator.parentCoordinator = self
         addChildCoordinator(childCoordinator: listCoordinator)
+        
     }
     
     func start() -> some View {
         print("[AppCoordinator] START")
+        /*
         listCoordinator.parentCoordinator = self
         let listView = listCoordinator.start()
+        */
         
-        return listView
+        return _rootView
     }
     
     @ViewBuilder func destination(page: AppRoute) -> some View {

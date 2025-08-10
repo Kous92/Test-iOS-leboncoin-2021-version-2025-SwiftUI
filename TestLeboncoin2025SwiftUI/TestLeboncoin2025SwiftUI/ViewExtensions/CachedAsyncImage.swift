@@ -20,14 +20,21 @@ struct CachedAsyncImage: View {
             if let image {
                 Image(uiImage: image)
                     .resizable()
-                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+                    // .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    //.aspectRatio(1, contentMode: .fit)
                     .transition(.opacity)
             } else if isLoading {
                 ProgressView()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    // .aspectRatio(1, contentMode: .fit)
             } else {
                 Image(placeholder)
                     .resizable()
-                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+                    // .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    // .aspectRatio(1, contentMode: .fit)
             }
         }
         .task {
@@ -53,3 +60,4 @@ struct CachedAsyncImage: View {
         }
     }
 }
+

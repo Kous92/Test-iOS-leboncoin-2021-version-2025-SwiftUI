@@ -9,9 +9,13 @@ import SwiftUI
 
 struct ItemCellView: View {
     let viewModel: ItemViewModel
-
+    // let cellWidth: CGFloat
+    
     var body: some View {
+        // let imageHeight = cellWidth * 0.75 // ratio 3:4
+        
         VStack(alignment: .leading, spacing: 8) {
+            /*
             AsyncImage(url: URL(string: viewModel.smallImage)) { phase in
                 switch phase {
                 case .empty:
@@ -32,19 +36,37 @@ struct ItemCellView: View {
                     EmptyView()
                 }
             }
-
+             */
+            /*
+            CachedAsyncImage(url: URL(string: viewModel.smallImage), placeholder: "leboncoinPlaceholderSmall")
+                .frame(maxWidth: .infinity) // S'assurer que l'image prend toute la largeur disponible
+                .aspectRatio(4/3, contentMode: .fit) // Définir un aspect ratio fixe pour l'image
+                .cornerRadius(10)
+                .background(Color.gray.opacity(0.1)) // Couleur de fond pour le placeholder/chargement
+                .clipped()
+             */
+            CachedAsyncImage(url: URL(string: viewModel.smallImage), placeholder: "leboncoinPlaceholderSmall")
+                .scaledToFill()
+                .aspectRatio(4/3, contentMode: .fit)
+                .clipped()
+                .cornerRadius(10)
+                .background(RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.blue, lineWidth: 1)
+                    .background(Color(.systemBackground)))
+            
             Text(viewModel.itemTitle)
                 .font(.headline)
                 .lineLimit(2)
-
+                .fixedSize(horizontal: false, vertical: true)
+            
             Text(formatPriceInEuros(with: viewModel.itemPrice))
                 .font(.subheadline)
                 .foregroundStyle(.green)
                 .bold()
-
+            
             Text(viewModel.itemCategory)
                 .font(.caption)
-
+            
             if viewModel.isUrgent {
                 Text("URGENT")
                     .font(.caption)

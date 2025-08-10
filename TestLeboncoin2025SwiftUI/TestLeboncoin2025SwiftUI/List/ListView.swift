@@ -10,13 +10,13 @@ import SwiftUI
 struct ListView: View {
     @State var viewModel: ListViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
+    
     private var columns: [GridItem] {
         let isIpad = horizontalSizeClass == .regular
         let count = isIpad ? 4 : 2
-        return Array(repeating: GridItem(.flexible(), spacing: Constants.List.spacing), count: count)
+        return Array(repeating: GridItem(.flexible(), spacing: Constants.List.spacing, alignment: .top), count: count)
     }
-
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -44,11 +44,15 @@ struct ListView: View {
             }
         }
         .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher")
+        .task {
+            viewModel.fetchItemList()
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        ListView(viewModel: ListViewModel())
+        let builder = ListBuilder()
+        ListView(viewModel: builder.getModule())
     }
 }

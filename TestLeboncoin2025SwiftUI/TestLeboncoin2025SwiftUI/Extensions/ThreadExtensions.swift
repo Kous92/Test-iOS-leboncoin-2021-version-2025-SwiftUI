@@ -12,7 +12,7 @@ import Foundation
 /// Voir ici: https://github.com/swiftlang/swift-corelibs-foundation/issues/5139
 extension Thread {
     /// Pour voir avec Swift Concurrency le thread actuel exécuté.
-    public static var currentThread: Thread {
+    nonisolated public static var currentThread: Thread {
         return Thread.current
     }
     

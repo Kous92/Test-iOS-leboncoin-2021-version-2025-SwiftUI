@@ -21,15 +21,18 @@ struct DetailView: View {
                     Text(viewModel.itemViewModel.itemTitle)
                         .font(.system(size: Constants.Detail.itemTitle, weight: .semibold))
                         .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityIdentifier("productTitle")
 
                     Text(formatPriceInEuros(with: viewModel.itemViewModel.itemPrice))
                         .font(.system(size: Constants.Detail.price, weight: .semibold))
                         .foregroundColor(.green)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityIdentifier("productPrice")
 
                     Text(viewModel.itemViewModel.itemAddedDate.stringToFullDateFormat())
                         .font(.system(size: Constants.Detail.contentLabel, weight: .semibold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityIdentifier("productDate")
 
                     if viewModel.isUrgentItem() {
@@ -44,6 +47,7 @@ struct DetailView: View {
                     }
                 }
                 .padding()
+                .frame(maxWidth: .infinity)
                 .background(RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.gray, lineWidth: 1)
                     .background(Color(.systemBackground)))
@@ -81,16 +85,6 @@ struct DetailView: View {
         }
         .navigationTitle("Détail de l’annonce")
         .navigationBarTitleDisplayMode(.inline)
-        /*
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("List") {
-                    viewModel.backToPreviousScreen()
-                }
-                .accessibilityIdentifier("listButton")
-            }
-        }
-        */
         .background(Color(.systemBackground))
         .onAppear {
             // viewModel.loadData()

@@ -29,7 +29,7 @@ final class FilterCoordinator: Coordinator {
     
     func start() -> some View {
         print("[FilterCoordinator] Création de la vue filtre.")
-        print("Parent: \(parentCoordinator)")
+        // print("Parent: \(parentCoordinator)")
         builder.buildModule(testMode: testMode, coordinator: self)
         let viewModel = builder.getModule()
         return FilterView(viewModel: viewModel)

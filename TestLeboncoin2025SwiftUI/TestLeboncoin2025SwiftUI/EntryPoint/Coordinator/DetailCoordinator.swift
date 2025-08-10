@@ -29,7 +29,7 @@ final class DetailCoordinator: Coordinator {
     
     func start() -> some View {
         print("[DetailCoordinator] Création de la vue détail.")
-        print("Parent: \(parentCoordinator)")
+        // print("Parent: \(parentCoordinator)")
         builder.buildModule(testMode: testMode, coordinator: self)
         let viewModel = builder.getModule()
         return DetailView(viewModel: viewModel)
