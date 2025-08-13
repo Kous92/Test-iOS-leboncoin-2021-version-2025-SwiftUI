@@ -19,16 +19,24 @@ struct ListView: View {
     
     var body: some View {
         VStack {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: Constants.List.spacing) {
-                    ForEach(viewModel.getViewModels()) { item in
-                        ItemCellView(viewModel: item)
-                            .onTapGesture {
-                                viewModel.coordinator?.goToDetailView(with: item)
-                            }
+            if viewModel.isLoading {
+                Spacer()
+                ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .font(.headline)
+                Spacer()
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: Constants.List.spacing) {
+                        ForEach(viewModel.getViewModels()) { item in
+                            ItemCellView(viewModel: item)
+                                .onTapGesture {
+                                    viewModel.coordinator?.goToDetailView(with: item)
+                                }
+                        }
                     }
+                    .padding(Constants.List.insets)
                 }
-                .padding(Constants.List.insets)
             }
         }
         .navigationTitle("Liste des articles")
@@ -39,12 +47,13 @@ struct ListView: View {
                     viewModel.coordinator?.goToFilterView(with: viewModel.getItemCategories())
                 } label: {
                     Image(systemName: "list.bullet")
+                        .tint(Color(uiColor: UIColor.label))
                 }
                 .accessibilityIdentifier("listButton")
             }
         }
         .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher")
-        .task {
+        .onFirstAppear {
             viewModel.fetchItemList()
         }
     }
@@ -53,6 +62,7 @@ struct ListView: View {
 #Preview {
     NavigationStack {
         let builder = ListBuilder()
-        ListView(viewModel: builder.getModule())
+        builder.buildModule(testMode: true)
+        return ListView(viewModel: builder.getModule())
     }
 }

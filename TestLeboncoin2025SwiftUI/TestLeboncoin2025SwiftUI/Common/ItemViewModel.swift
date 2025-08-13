@@ -31,7 +31,18 @@ struct ItemViewModel: Sendable, Identifiable, Hashable {
         self.siret = siret
     }
     
-    /*
+    nonisolated init(smallImageURL: String = "?", thumbImageURL: String = "?", itemTitle: String = "?", itemCategory: String = "?", itemPrice: Int = 0, isUrgent: Bool = false, itemDescription: String = "?", itemAddedDate: String = "?", siret: String? = nil) {
+        self.smallImage = smallImageURL
+        self.thumbImage = thumbImageURL
+        self.itemTitle = itemTitle
+        self.itemCategory = itemCategory
+        self.itemPrice = itemPrice
+        self.isUrgent = isUrgent
+        self.itemDescription = itemDescription
+        self.itemAddedDate = itemAddedDate
+        self.siret = siret
+    }
+    
     init(with item: ItemDTO) {
         self.smallImage = item.smallImageURL
         self.thumbImage = item.thumbImageURL
@@ -43,7 +54,18 @@ struct ItemViewModel: Sendable, Identifiable, Hashable {
         self.itemAddedDate = item.creationDate
         self.siret = item.siret
     }
-     */
+    
+    nonisolated init(withNonIsolated item: ItemDTO) {
+        self.smallImage = item.smallImageURL
+        self.thumbImage = item.thumbImageURL
+        self.itemTitle = item.title
+        self.itemCategory = "\(item.categoryID)"
+        self.itemPrice = item.price
+        self.isUrgent = item.isUrgent
+        self.itemDescription = item.description
+        self.itemAddedDate = item.creationDate
+        self.siret = item.siret
+    }
 }
 
 extension ItemViewModel {

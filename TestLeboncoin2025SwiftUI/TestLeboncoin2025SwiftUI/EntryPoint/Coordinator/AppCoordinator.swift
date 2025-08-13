@@ -26,10 +26,6 @@ import Observation
     
     func start() -> some View {
         print("[AppCoordinator] START")
-        /*
-        listCoordinator.parentCoordinator = self
-        let listView = listCoordinator.start()
-        */
         
         return _rootView
     }

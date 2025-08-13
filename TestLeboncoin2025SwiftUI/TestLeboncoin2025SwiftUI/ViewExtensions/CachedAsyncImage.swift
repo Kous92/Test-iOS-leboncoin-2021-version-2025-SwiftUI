@@ -17,24 +17,25 @@ struct CachedAsyncImage: View {
 
     var body: some View {
         ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color(uiColor: UIColor.systemBackground))
+                .stroke(Color(uiColor: UIColor.label), lineWidth: 1)// couleur de fond si pas d'image
+                .aspectRatio(4/3, contentMode: .fit)
+            
             if let image {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    // .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    //.aspectRatio(1, contentMode: .fit)
-                    .transition(.opacity)
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             } else if isLoading {
                 ProgressView()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    // .aspectRatio(1, contentMode: .fit)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 Image(placeholder)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    // .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    // .aspectRatio(1, contentMode: .fit)
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }
         .task {

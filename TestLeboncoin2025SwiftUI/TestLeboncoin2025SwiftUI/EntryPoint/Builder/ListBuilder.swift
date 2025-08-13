@@ -24,11 +24,11 @@ final class ListBuilder: ModuleBuilder {
         
         // 2) Get use case instances: domain layer
         let itemCategoryFetchUseCase = ItemCategoryFetchUseCase(dataRepository: dataRepository)
-        // let itemListFetchUseCase = ItemListFetchUseCase(dataRepository: dataRepository)
+        let itemListFetchUseCase = ItemListFetchUseCase(dataRepository: dataRepository)
         // let loadSavedSelectedSourceUseCase = LoadSavedSelectedSourceUseCase(itemCategorySettingsRepository: loadRepository)
         
         
-        self.listViewModel = ListViewModel(itemCategoryFetchUseCase: itemCategoryFetchUseCase)
+        self.listViewModel = ListViewModel(itemCategoryFetchUseCase: itemCategoryFetchUseCase, itemListFetchUseCase: itemListFetchUseCase)
         
         // Les injections des couches se feront ici
         listViewModel?.coordinator = coordinator as? ListCoordinator

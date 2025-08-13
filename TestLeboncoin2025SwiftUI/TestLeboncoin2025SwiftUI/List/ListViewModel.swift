@@ -7,7 +7,6 @@
 
 import Observation
 import Foundation
-import Combine
 
 @Observable final class ListViewModel {
     weak var coordinator: ListCoordinator?
@@ -17,11 +16,11 @@ import Combine
     private var filteredItemsViewModels: [ItemViewModel] = []
     private var activeCategory: String = "Toutes catégories"
     
-    private var cancellables: Set<AnyCancellable> = []
+    var isLoading = false
     
     // Use cases
     private let itemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol
-    // private let itemListFetchUseCase: ItemListFetchUseCaseProtocol
+    private let itemListFetchUseCase: ItemListFetchUseCaseProtocol
     // private let loadSavedSelectedSourceUseCase: LoadSavedSelectedCategoryUseCaseProtocol
     
     // La tâche de recherche
@@ -34,15 +33,15 @@ import Combine
         }
     }
     
-    init(itemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol) {
+    init(itemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol, itemListFetchUseCase: ItemListFetchUseCaseProtocol) {
         self.itemCategoryFetchUseCase = itemCategoryFetchUseCase
+        self.itemListFetchUseCase = itemListFetchUseCase
         
         // L'écoute du flux asynchrone de recherche est initialisé
         observeSearchQuery()
         
-        itemsViewModels = ItemViewModel.getFakeItems()
-        filteredItemsViewModels = itemsViewModels
-        
+        // itemsViewModels = ItemViewModel.getFakeItems()
+        /*
         itemCategories = [
             ItemCategoryViewModel(id: 0, name: "Toutes catégories"),
             ItemCategoryViewModel(id: 1, name: "Multimédia"),
@@ -50,7 +49,9 @@ import Combine
             ItemCategoryViewModel(id: 3, name: "Alimentation"),
             ItemCategoryViewModel(id: 4, name: "Automobile")
         ]
+         */
         
+        print("Catégories: \(itemCategories.count)")
         print("ListViewModel initialisé.")
     }
     
@@ -94,7 +95,7 @@ import Combine
     }
     
     private nonisolated func filterItemsWithSearch() async {
-        let itemActor = await ItemActor(with: itemsViewModels)
+        let itemActor = await ItemActor(with: itemsViewModels, and: itemCategories)
         
         // Depuis une fonction nonisolated, il n'est pas possible de le faire directement depuis le MainActor. Une fois la liste filtrée récupérée, la mutation de la liste est faisable.
         let filteredItems = await itemActor.filterItemsWithSearch(query: searchQuery, activeCategory: self.activeCategory)
@@ -109,6 +110,7 @@ import Combine
     // Ici, on va récupérer depuis le réseau de façon synchronisée les catégories d'articles et les annonces
     func fetchItemList() {
         print("Thread avant entrée dans le Task: ", Thread.currentThread)
+        isLoading = true
         
         // Task.detached permet de sortir du main thread et de passer en background thread (tâche de fond)
         Task { [weak self] in
@@ -121,7 +123,7 @@ import Combine
             // Les catégories en premier puis la liste d'annonces
             await self.fetchItemCategories()
             print("-> \(self.itemCategories)")
-            // await self.fetchItems()
+            await self.fetchItems()
             
             // Pour éviter un bug, l'actualisation de la vue se déclenchera après chargement de la catégorie et du filtrage.
             // self.loadSelectedItemCategory()
@@ -144,14 +146,18 @@ import Combine
     private func fetchItems() async {
         print("Thread fetchItems: \(Thread.currentThread)")
         do {
-            // await parseViewModels(with: try await itemListFetchUseCase.execute())
+            let parsedItemViewModels = try await itemListFetchUseCase.execute()
+            let itemActor = ItemActor(with: parsedItemViewModels, and: itemCategories)
+            
+            itemsViewModels = await itemActor.parseViewModels()
         } catch APIError.errorMessage(let errorMessage) {
-            await sendErrorMessage(with: errorMessage)
+            sendErrorMessage(with: errorMessage)
         } catch {
-            await sendErrorMessage(with: error.localizedDescription)
+            sendErrorMessage(with: error.localizedDescription)
         }
         
         filteredItemsViewModels = itemsViewModels
+        isLoading = false
     }
 
     /*
