@@ -19,7 +19,6 @@ struct CachedAsyncImage: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color(uiColor: UIColor.systemBackground))
-                .stroke(Color(uiColor: UIColor.label), lineWidth: 1)// couleur de fond si pas d'image
                 .aspectRatio(4/3, contentMode: .fit)
             
             if let image {
@@ -60,5 +59,9 @@ struct CachedAsyncImage: View {
             isLoading = false
         }
     }
+}
+
+#Preview("CachedAsyncImage preview", traits: .fixedLayout(width: 180, height: 300)) {
+    CachedAsyncImage(url: URL(string: "https://img-prd-pim.poorvika.com/prodvarval/Apple-iphone-16-pro-black-titanium-128gb-Front-Back-View-Thumbnail.png"), placeholder: "leboncoinPlaceholderSmall")
 }
 

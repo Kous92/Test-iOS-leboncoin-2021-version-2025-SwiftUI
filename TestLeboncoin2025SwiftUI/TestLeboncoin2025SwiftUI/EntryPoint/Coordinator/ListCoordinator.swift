@@ -49,4 +49,9 @@ final class ListCoordinator: ParentCoordinator {
         // print("Parent: \(parentCoordinator)")
         parentCoordinator?.push(page: .filter(categories))
     }
+    
+    func notifyCategoryUpdate() {
+        print("[ListCoordinator] Une catégorie a été sélectionnée, application du filtre...")
+        builder.getModule().updateCategoryFilter()
+    }
 }

@@ -12,8 +12,8 @@ struct ListView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     private var columns: [GridItem] {
-        let isIpad = horizontalSizeClass == .regular
-        let count = isIpad ? 4 : 2
+        let iPad = horizontalSizeClass == .regular
+        let count = iPad ? 4 : 2
         return Array(repeating: GridItem(.flexible(), spacing: Constants.List.spacing, alignment: .top), count: count)
     }
     
@@ -22,17 +22,24 @@ struct ListView: View {
             if viewModel.isLoading {
                 Spacer()
                 ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .font(.headline)
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .font(.headline)
                 Spacer()
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: Constants.List.spacing) {
                         ForEach(viewModel.getViewModels()) { item in
-                            ItemCellView(viewModel: item)
-                                .onTapGesture {
-                                    viewModel.coordinator?.goToDetailView(with: item)
-                                }
+                            if #available(iOS 26.0, *) {
+                                GlassItemCellView(viewModel: item)
+                                    .onTapGesture {
+                                        viewModel.coordinator?.goToDetailView(with: item)
+                                    }
+                            } else {
+                                ItemCellView(viewModel: item)
+                                    .onTapGesture {
+                                        viewModel.coordinator?.goToDetailView(with: item)
+                                    }
+                            }
                         }
                     }
                     .padding(Constants.List.insets)

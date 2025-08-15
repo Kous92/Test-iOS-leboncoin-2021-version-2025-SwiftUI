@@ -13,30 +13,28 @@ struct FilterView: View {
     var body: some View {
         VStack {
             List {
-                ForEach(viewModel.itemCategories.indices, id: \.self) { index in
-                    let item = viewModel.itemCategories[index]
-                    
+                ForEach(viewModel.itemCategories, id: \.self) { itemCategory in
                     HStack {
-                        Text(item.name)
+                        Text(itemCategory.name)
                         Spacer()
-                        if index == viewModel.currentSelectedIndex {
+                        if itemCategory.id == viewModel.currentSelectedIndex {
                             Image(systemName: "checkmark")
                                 .foregroundColor(.green)
                         }
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        if index != viewModel.currentSelectedIndex {
-                            viewModel.saveSelectedCategory(at: index)
+                        if itemCategory.id != viewModel.currentSelectedIndex {
+                            viewModel.saveSelectedCategory(at: itemCategory.id)
                         }
                     }
-                    .accessibilityIdentifier("category_\(index)")
+                    .accessibilityIdentifier("category_\(itemCategory.id)")
                 }
             }
             .navigationTitle("Catégories")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                viewModel.loadSetting()
+            .task {
+                await viewModel.loadSetting()
             }
             .onDisappear {
                 viewModel.backToPreviousScreen()
@@ -48,7 +46,8 @@ struct FilterView: View {
 #if DEBUG
 @available(iOS 17.0, *)
 #Preview("FilterView") {
-    let vm = FilterViewModel(itemCategories: ItemCategoryViewModel.getFakeItemCategories())
-    FilterView(viewModel: vm)
+    let builder = FilterBuilder(with: ItemCategoryViewModel.getFakeItemCategories())
+    builder.buildModule(testMode: true)
+    return FilterView(viewModel: builder.getModule())
 }
 #endif

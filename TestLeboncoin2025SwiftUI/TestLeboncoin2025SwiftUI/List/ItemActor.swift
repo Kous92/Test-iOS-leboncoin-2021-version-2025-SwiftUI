@@ -17,6 +17,7 @@ actor ItemActor {
     }
     
     @concurrent nonisolated func filterItemsWithSearch(query: String, activeCategory: String) async -> [ItemViewModel] {
+        print("[ItemActor] filterItemsWithSearch -> Thread: \(Thread.currentThread)")
         var filteredItemsViewModels: [ItemViewModel] = []
         
         if query.isEmpty {
@@ -38,7 +39,32 @@ actor ItemActor {
         return filteredItemsViewModels
     }
     
+    @concurrent nonisolated func filterItemsByCategory(with itemCategoryName: String, activeSearch: String) async -> [ItemViewModel] {
+        print("[ItemActor] filterItemsWithSearch -> Thread: \(Thread.currentThread)")
+        var filteredItemsViewModels: [ItemViewModel] = []
+        
+        if itemCategoryName == "Toutes catégories" {
+            filteredItemsViewModels = await items
+        } else {
+            filteredItemsViewModels = await items.filter { viewModel in
+                // Attention à un bug: Si un filtrage par recherche est déjà actif, il faut le prendre en compte.
+                let matchingCategory = viewModel.itemCategory == itemCategoryName
+                
+                // print(">>> Filtrage de catégories avec recherche: \(!searchQuery.isEmpty)")
+                if !activeSearch.isEmpty {
+                    let title = viewModel.itemTitle.lowercased()
+                    return title.contains(activeSearch.lowercased()) && matchingCategory
+                }
+                
+                return matchingCategory
+            }
+        }
+        
+        return filteredItemsViewModels
+    }
+    
     @concurrent nonisolated func parseViewModels() async -> [ItemViewModel] {
+        print("[ItemActor] parseViewModels -> Thread: \(Thread.currentThread)")
         let parsedViewModels = await items.map { item in
             let categoryId = self.categories.firstIndex { category in
                 guard let id = Int(item.itemCategory) else {
@@ -61,6 +87,7 @@ actor ItemActor {
     }
     
     private func sortItems(with parsedItems: [ItemViewModel]) ->  [ItemViewModel]{
+        print("[ItemActor] sortItems -> Thread: \(Thread.currentThread)")
         // ✅ Tri : urgents en premier, puis triés par date décroissante
         items = parsedItems.sorted(by: { lhs, rhs in
             if lhs.isUrgent != rhs.isUrgent {

@@ -38,4 +38,13 @@ final class FilterCoordinator: Coordinator {
     func backToHomeView() {
         parentCoordinator?.removeChildCoordinator(childCoordinator: self)
     }
+    
+    func notifyCategoryUpdate() {
+        print(parentCoordinator?.childCoordinators)
+        
+        if let listCoordinator = parentCoordinator?.childCoordinators.first(where: { $0 is ListCoordinator }) as? ListCoordinator {
+            print("Filter: Une mise à jour de catégorie aura lieu.")
+            listCoordinator.notifyCategoryUpdate()
+        }
+    }
 }

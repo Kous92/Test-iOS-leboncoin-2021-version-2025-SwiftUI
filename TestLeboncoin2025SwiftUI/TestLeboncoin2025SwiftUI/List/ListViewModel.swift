@@ -21,7 +21,7 @@ import Foundation
     // Use cases
     private let itemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol
     private let itemListFetchUseCase: ItemListFetchUseCaseProtocol
-    // private let loadSavedSelectedSourceUseCase: LoadSavedSelectedCategoryUseCaseProtocol
+    private let loadSavedSelectedCategoryUseCase: LoadSavedSelectedCategoryUseCaseProtocol
     
     // La tâche de recherche
     private var searchQueryContinuation: AsyncStream<String>.Continuation?
@@ -33,25 +33,13 @@ import Foundation
         }
     }
     
-    init(itemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol, itemListFetchUseCase: ItemListFetchUseCaseProtocol) {
+    init(itemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol, itemListFetchUseCase: ItemListFetchUseCaseProtocol, loadSavedSelectedCategoryUseCase: LoadSavedSelectedCategoryUseCaseProtocol) {
         self.itemCategoryFetchUseCase = itemCategoryFetchUseCase
         self.itemListFetchUseCase = itemListFetchUseCase
+        self.loadSavedSelectedCategoryUseCase = loadSavedSelectedCategoryUseCase
         
         // L'écoute du flux asynchrone de recherche est initialisé
         observeSearchQuery()
-        
-        // itemsViewModels = ItemViewModel.getFakeItems()
-        /*
-        itemCategories = [
-            ItemCategoryViewModel(id: 0, name: "Toutes catégories"),
-            ItemCategoryViewModel(id: 1, name: "Multimédia"),
-            ItemCategoryViewModel(id: 2, name: "Immobilier"),
-            ItemCategoryViewModel(id: 3, name: "Alimentation"),
-            ItemCategoryViewModel(id: 4, name: "Automobile")
-        ]
-         */
-        
-        print("Catégories: \(itemCategories.count)")
         print("ListViewModel initialisé.")
     }
     
@@ -60,6 +48,30 @@ import Foundation
         Task { @MainActor [weak self] in
             self?.searchQueryTask?.cancel()
             self?.searchQueryContinuation?.finish()
+        }
+    }
+    
+    // Dès qu'il y a eu une sélection du filtre depuis FilterViewController, se déclenche via les delegates de FilterCoordinator et ListCoordinator. Le but étant de charger le nouveau filtre et l'appliquer dès que nécessaire pour éviter certains bugs et soucis de synchronisation.
+    func updateCategoryFilter() {
+        print(">>> Prêt pour appliquer le filtre de la catégorie dans la liste.")
+        isLoading = true
+        loadSelectedItemCategory()
+    }
+    
+    nonisolated func loadSelectedItemCategory() {
+        Task { [weak self] in
+            do {
+                let itemCategory = try await self?.loadSavedSelectedCategoryUseCase.execute()
+                
+                await MainActor.run { [weak self] in
+                    self?.activeCategory = itemCategory?.name ?? "Toutes catégories"
+                }
+                
+                await self?.filterItemsByCategory(with: itemCategory?.name ?? "Toutes catégories")
+            } catch APIError.errorMessage(let message) {
+                print("\(message). La catégorie par défaut sera appliquée.")
+                await self?.filterItemsByCategory(with: "Toutes catégories")
+            }
         }
     }
     
@@ -94,16 +106,26 @@ import Foundation
         }
     }
     
-    private nonisolated func filterItemsWithSearch() async {
+    @concurrent private nonisolated func filterItemsWithSearch() async {
         let itemActor = await ItemActor(with: itemsViewModels, and: itemCategories)
         
         // Depuis une fonction nonisolated, il n'est pas possible de le faire directement depuis le MainActor. Une fois la liste filtrée récupérée, la mutation de la liste est faisable.
         let filteredItems = await itemActor.filterItemsWithSearch(query: searchQuery, activeCategory: self.activeCategory)
             
         await MainActor.run { [weak self] in
-            // self?.isLoadingData?(false)
-            // self?.onDataUpdated?()
             self?.filteredItemsViewModels = filteredItems
+        }
+    }
+    
+    @concurrent private nonisolated func filterItemsByCategory(with itemCategoryName: String) async {
+        let itemActor = await ItemActor(with: itemsViewModels, and: itemCategories)
+        
+        // Depuis une fonction nonisolated, il n'est pas possible de le faire directement depuis le MainActor. Une fois la liste filtrée récupérée, la mutation de la liste est faisable.
+        let filteredItems = await itemActor.filterItemsByCategory(with: itemCategoryName, activeSearch: self.searchQuery)
+        
+        await MainActor.run { [weak self] in
+            self?.filteredItemsViewModels = filteredItems
+            self?.isLoading = false
         }
     }
     
@@ -126,7 +148,7 @@ import Foundation
             await self.fetchItems()
             
             // Pour éviter un bug, l'actualisation de la vue se déclenchera après chargement de la catégorie et du filtrage.
-            // self.loadSelectedItemCategory()
+            self.loadSelectedItemCategory()
             print("Thread dans le Task après màj: ", Thread.currentThread)
         }
     }
@@ -157,42 +179,7 @@ import Foundation
         }
         
         filteredItemsViewModels = itemsViewModels
-        isLoading = false
     }
-
-    /*
-    private func parseViewModels(with itemsViewModels: [ItemViewModel]) async {
-        let parsedViewModels = itemsViewModels.map { item in
-            let categoryId = self.itemCategories.firstIndex { category in
-                guard let id = Int(item.itemCategory) else {
-                    return false
-                }
-                
-                return id == category.id
-            }
-            
-            var category = "Inconnu"
-            
-            if let categoryId {
-                // category = self.itemCategoriesViewModels[categoryId].name
-            }
-            
-            return ItemViewModel(smallImage: item.smallImage, thumbImage: item.thumbImage, itemTitle: item.itemTitle, itemCategory: category, itemPrice: item.itemPrice, isUrgent: item.isUrgent, itemDescription: item.itemDescription, itemAddedDate: item.itemAddedDate, siret: item.siret)
-        }
-        
-        // ✅ Tri : urgents en premier, puis triés par date décroissante
-        self.itemsViewModels = parsedViewModels.sorted(by: { lhs, rhs in
-            if lhs.isUrgent != rhs.isUrgent {
-                return lhs.isUrgent && !rhs.isUrgent // urgents d'abord
-            }
-            
-            // Comparer les dates en ISO8601 ou format parsable
-            let lhsDate = ISO8601DateFormatter().date(from: lhs.itemAddedDate) ?? .distantPast
-            let rhsDate = ISO8601DateFormatter().date(from: rhs.itemAddedDate) ?? .distantPast
-            return lhsDate > rhsDate
-        })
-    }
-     */
     
     // MARK: - Logique CollectionView
     func numberOfItems() -> Int {
@@ -206,18 +193,6 @@ import Foundation
     func getItemCategories() -> [ItemCategoryViewModel] {
         return itemCategories
     }
-    /*/
-    func getItemViewModel(at indexPath: IndexPath) -> ItemViewModel? {
-        // On vérifie bien qu'il y a au moins une cellule dans la liste après filtrage, sinon ça il y aura un crash
-        let cellCount = filteredItemsViewModels.count
-        
-        guard cellCount > 0, indexPath.item < cellCount else {
-            return nil
-        }
-        
-        return filteredItemsViewModels[indexPath.item]
-    }
-     */
 }
 
 // Logique de navigation

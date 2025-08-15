@@ -1,15 +1,15 @@
 //
-//  ItemCellView.swift
+//  GlassItemCellView.swift
 //  TestLeboncoin2025SwiftUI
 //
-//  Created by Koussaïla Ben Mamar on 30/06/2025.
+//  Created by Koussaïla Ben Mamar on 16/08/2025.
 //
 
 import SwiftUI
 
-struct ItemCellView: View {
+@available(iOS 26.0, *)
+struct GlassItemCellView: View {
     let viewModel: ItemViewModel
-    // let cellWidth: CGFloat
     
     var body: some View {
         // let imageHeight = cellWidth * 0.75 // ratio 3:4
@@ -45,6 +45,7 @@ struct ItemCellView: View {
             }
         }
         .padding(8)
+        .glassEffect()
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(.systemBackground))
@@ -52,10 +53,11 @@ struct ItemCellView: View {
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Annonce: \(viewModel.itemTitle), \(viewModel.itemPrice), \(viewModel.itemCategory)\(viewModel.isUrgent ? ", Urgent" : "")")
-        
     }
 }
 
-#Preview("ItemCollectionViewCell preview", traits: .fixedLayout(width: 180, height: 300)) {
-    ItemCellView(viewModel: ItemViewModel.getFakeItem())
+#Preview("ItemCell Liquid Glass preview", traits: .fixedLayout(width: 180, height: 300)) {
+    if #available(iOS 26.0, *) {
+        GlassItemCellView(viewModel: ItemViewModel.getFakeItem())
+    }
 }
