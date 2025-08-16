@@ -28,12 +28,12 @@ final class ItemCategoryUserDefaultsRepository: ItemCategorySettingsRepository {
         return itemCategoryToDTO(with: itemCategory)
     }
     
-    /// Converts Data Transfer Object to encodable SavedSource for Data Layer
+    /// Convertit l'objet de transfert de données (DTO: Data Transfer Object) en un SavedSource encodable pour la couche Data
     private func dtoToItemCategory(with dto: ItemCategoryDTO) -> ItemCategory {
         return dto.getEncodableItemCategory()
     }
     
-    /// Converts SavedSource data objects to Source Data Transfer Object for Domain Layer
+    /// Convertit un objet SavedSource en objet de transfert de données (DTO: Data Transfer Object) pour la couche domaine
     private func itemCategoryToDTO(with itemCategory: ItemCategory) -> ItemCategoryDTO {
         return itemCategory.getDTO()
     }

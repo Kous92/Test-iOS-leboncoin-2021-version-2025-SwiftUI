@@ -18,18 +18,20 @@ import Observation
     private var _rootView: AnyView
     
     init() {
+        // Ici, on initialise une seule fois la vue. Sinon, si on le fait dans start(), ça se fera en permance et ça perturbera le fonctionnement de l'application.
         _rootView = AnyView(listCoordinator.start())
         listCoordinator.parentCoordinator = self
         addChildCoordinator(childCoordinator: listCoordinator)
-        
     }
     
+    // La fonction se déclenche à chaque apparition de la vue principale, ce qui est contraignant en SwiftUI. Il faut donc récupérer la variable d'état contenant la vue racine initialisée.
     func start() -> some View {
         print("[AppCoordinator] START")
         
         return _rootView
     }
     
+    // Les destinations parmi les 2 écrans possibles depuis la vue principale.
     @ViewBuilder func destination(page: AppRoute) -> some View {
         switch page {
         case .detail(let itemViewModel):
@@ -43,17 +45,15 @@ import Observation
         }
     }
     
-    // Type '()' cannot conform to 'View'
     func getDetailView(with detailCoordinator: DetailCoordinator) -> some View {
         detailCoordinator.parentCoordinator = self
-        addChildCoordinator(childCoordinator: detailCoordinator) // Ajoutez-le comme enfant ici
+        addChildCoordinator(childCoordinator: detailCoordinator)
         return detailCoordinator.start()
     }
     
-    // Type '()' cannot conform to 'View'
     func getFilterView(with filterCoordinator: FilterCoordinator) -> some View {
         filterCoordinator.parentCoordinator = self
-        addChildCoordinator(childCoordinator: filterCoordinator) // Ajoutez-le comme enfant ici
+        addChildCoordinator(childCoordinator: filterCoordinator)
         return filterCoordinator.start()
     }
 }

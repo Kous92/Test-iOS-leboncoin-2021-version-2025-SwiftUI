@@ -7,12 +7,12 @@
 import Foundation
 
 /**
- Manages the cache in memory of any data type to prevent downloading same data more than one time. Also, with an `actor` (reference type), it's used to be safe in concurrent environments, meaning with multiple threads (here from `Task` blocks and `async` functions), to prevent data races (unpredictable behaviors, memory corruption, crashes) thanks to a dedicated synchronized access to its isolated data). The data will be accessed with `await` into `async` functions.
-    
- Also, this cache manager has an expiration date to make sure when the time interval is expired, to allow the app downloading new data.
+ Gère le cache en mémoire pour tout type de données afin d’éviter de télécharger plusieurs fois les mêmes données. De plus, en utilisant un `actor` (type référence), il est sûr pour les environnements concurrents, c’est-à-dire avec plusieurs threads (ici via des blocs `Task` et des fonctions `async`), afin d’éviter les conflits d’accès aux données (data races) (comportements imprévisibles, corruptions mémoire, plantages), grâce à un accès synchronisé dédié à ses données isolées. L’accès aux données se fait avec `await` dans des fonctions `async`.
+
+ Ce gestionnaire de cache dispose également d’une date d’expiration afin de permettre à l’application de télécharger de nouvelles données une fois l’intervalle de temps écoulé.
  */
 actor MemoryCache<T>: NSCacheType {
-    // NSCache is used to store data in cache and avoid to download more than one time the same data, also thread safe to avoid data corruption when accessed from multiple threads (tasks).
+    // NSCache est utilisé pour stocker des données en cache et éviter de télécharger plus d'une fois les mêmes données, également thread safe pour éviter la corruption de données lorsqu'il est utilisé par plusieurs threads (tâches).
     let cache: NSCache<NSString, CacheEntry<T>> = .init()
     var keysTracker: KeysTracker<T> = .init()
     let expirationInterval: TimeInterval

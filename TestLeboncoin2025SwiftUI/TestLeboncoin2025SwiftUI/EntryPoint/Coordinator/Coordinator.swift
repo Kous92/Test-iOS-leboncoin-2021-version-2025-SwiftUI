@@ -32,16 +32,16 @@ extension Coordinator {
         path.removeLast(path.count)
     }
     
-    /// Adds a child coordinator to the parent, the parent will have a reference to the child one.
+    /// Ajoute a un coordinator enfant au parent, le parent ayant une référence vers l'enfant.
     func addChildCoordinator(childCoordinator: Coordinator) {
         print("Adding child coordinator")
         self.childCoordinators.append(childCoordinator)
     }
 
-    /// Removes a child coordinator from the parent.
+    /// Supprime un coordinator enfant depuis le parent.
     func removeChildCoordinator(childCoordinator: Coordinator) {
         print("Removing child coordinator")
-        // Make sure to check reference between coordinators, use === instead of ==.
+        // Il est important de vérifier les références entre coordinators, en utilsant === au lieu de ==.
         self.childCoordinators = self.childCoordinators.filter { $0 !== childCoordinator }
     }
 }

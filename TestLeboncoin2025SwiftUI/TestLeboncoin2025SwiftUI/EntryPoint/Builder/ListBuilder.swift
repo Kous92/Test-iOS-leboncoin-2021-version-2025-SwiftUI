@@ -17,22 +17,24 @@ final class ListBuilder: ModuleBuilder {
     func buildModule(testMode: Bool, coordinator: Coordinator? = nil) {
         self.testMode = testMode
     
-        // Dependency injections for ViewModel, building the presentation, domain and data layers
-        // 1) Get repository instances: data layer
+        // Injections de dépendances pour le ViewModel, construction des couches présentation, domaine et data
+        // 1) Récupération des instances de Repository: couche data
         let dataRepository = getRepository(testMode: testMode)
         let loadRepository = getLoadRepository(testMode: testMode)
         
-        // 2) Get use case instances: domain layer
+        // 2) Récupération des instances de cas d'utilisation (use cases): couche domaine
         let itemCategoryFetchUseCase = ItemCategoryFetchUseCase(dataRepository: dataRepository)
         let itemListFetchUseCase = ItemListFetchUseCase(dataRepository: dataRepository)
         let loadSavedSelectedCategoryUseCase = LoadSavedSelectedCategoryUseCase(itemCategorySettingsRepository: loadRepository)
         
+        // 3) Application de la couche de présentation: le ViewModel en injectant les couches.
         self.listViewModel = ListViewModel(itemCategoryFetchUseCase: itemCategoryFetchUseCase, itemListFetchUseCase: itemListFetchUseCase, loadSavedSelectedCategoryUseCase: loadSavedSelectedCategoryUseCase)
         
-        // Les injections des couches se feront ici
+        // Pour le MVVM-C, le ViewModel aura une référence avec le coordinator pour la navigation
         listViewModel?.coordinator = coordinator as? ListCoordinator
     }
     
+    // Permet au Coordinator d'injecter la dépendance à la vue pour une mise en place complète des couches de la Clean Architecture
     func getModule() -> ListViewModel {
         guard let listViewModel else {
             fatalError("Une erreur est survenue: ListViewModel non disponible")

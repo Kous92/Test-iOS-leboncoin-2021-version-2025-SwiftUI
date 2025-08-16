@@ -32,6 +32,7 @@ struct GlassItemCellView: View {
             
             Text(viewModel.itemCategory)
                 .font(.caption)
+                // .foregroundStyle(.primary)
             
             if viewModel.isUrgent {
                 Text("URGENT")
@@ -45,7 +46,7 @@ struct GlassItemCellView: View {
             }
         }
         .padding(8)
-        .glassEffect()
+        // .glassEffect(.clear)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(.systemBackground))

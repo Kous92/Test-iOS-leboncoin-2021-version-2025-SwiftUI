@@ -9,10 +9,8 @@ import SwiftUI
 
 struct ItemCellView: View {
     let viewModel: ItemViewModel
-    // let cellWidth: CGFloat
     
     var body: some View {
-        // let imageHeight = cellWidth * 0.75 // ratio 3:4
         VStack(alignment: .leading, spacing: 8) {
             CachedAsyncImage(url: URL(string: viewModel.smallImage), placeholder: "leboncoinPlaceholderSmall")
                 .aspectRatio(4/3, contentMode: .fit)

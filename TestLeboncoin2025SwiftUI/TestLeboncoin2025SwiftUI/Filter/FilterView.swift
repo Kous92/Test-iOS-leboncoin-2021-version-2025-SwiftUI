@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FilterView: View {
     @Bindable var viewModel: FilterViewModel
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
@@ -33,6 +34,19 @@ struct FilterView: View {
             }
             .navigationTitle("Catégories")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss() // revient à ListView
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .fontWeight(.medium)
+                    }
+                }
+            }
+            .toolbarBackground(.visible, for: .navigationBar)
+            .tint(.primary)
             .task {
                 await viewModel.loadSetting()
             }

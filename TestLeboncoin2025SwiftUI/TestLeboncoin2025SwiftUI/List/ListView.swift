@@ -29,6 +29,11 @@ struct ListView: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: Constants.List.spacing) {
                         ForEach(viewModel.getViewModels()) { item in
+                            ItemCellView(viewModel: item)
+                                .onTapGesture {
+                                    viewModel.coordinator?.goToDetailView(with: item)
+                                }
+                            /*
                             if #available(iOS 26.0, *) {
                                 GlassItemCellView(viewModel: item)
                                     .onTapGesture {
@@ -40,6 +45,7 @@ struct ListView: View {
                                         viewModel.coordinator?.goToDetailView(with: item)
                                     }
                             }
+                             */
                         }
                     }
                     .padding(Constants.List.insets)

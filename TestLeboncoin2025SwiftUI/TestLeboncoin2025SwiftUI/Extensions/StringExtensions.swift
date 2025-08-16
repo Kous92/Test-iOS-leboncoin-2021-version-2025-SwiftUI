@@ -21,7 +21,7 @@ func formatPriceInEuros(with price: Int) -> String {
 }
 
 extension String {
-    // Converting date format string "yyyy-MM-dd'T'HH:mm:ss+0000Z" to "dd/MM/yyyy à HH:mm" format
+    // Convertit la chaîne de date du format "yyyy-MM-dd'T'HH:mm:ss+0000Z" au format "dd/MM/yyyy à HH:mm"
     func stringToFullDateFormat() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -34,17 +34,17 @@ extension String {
         formatter.locale = Locale(identifier: "fr_FR")
         formatter.dateStyle = .short
         
-        let dateString = formatter.string(from: date) // Day, month, year
+        let dateString = formatter.string(from: date) // Jour, mois, année
         
         formatter.dateStyle = .none
         formatter.timeStyle = .short
         
-        let timeString = formatter.string(from: date) // Hours, minutes
+        let timeString = formatter.string(from: date) // Heures, minutes
         
         return "Le " + dateString + " à " + timeString
     }
     
-    // Converting date format string "yyyy-MM-dd to "dd/MM/yyyy" format
+    // Convertit la chaîne de date du format "yyyy-MM-dd" au format "dd/MM/yyyy"
     func stringToDateFormat() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -56,7 +56,7 @@ extension String {
         
         formatter.locale = Locale(identifier: "fr_FR")
         formatter.dateStyle = .long
-        let dateString = formatter.string(from: date) // Day, month, year
+        let dateString = formatter.string(from: date) /// Jour, mois, année
         
         return dateString
     }

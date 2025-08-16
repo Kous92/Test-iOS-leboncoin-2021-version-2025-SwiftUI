@@ -69,23 +69,27 @@ struct ItemViewModel: Sendable, Identifiable, Hashable {
 }
 
 extension ItemViewModel {
-    /// Returns a fake object with all available fields. For unit tests and SwiftUI previews
+    /// Retourne un faux objet avec tous les champs disponibles. Pour les tests unitaires et previews SwiftUI
     static func getFakeItem() -> ItemViewModel {
         return ItemViewModel(smallImage: "https://img-prd-pim.poorvika.com/prodvarval/Apple-iphone-16-pro-black-titanium-128gb-Front-Back-View-Thumbnail.png", thumbImage: "https://img-prd-pim.poorvika.com/prodvarval/Apple-iphone-16-pro-black-titanium-128gb-Front-Back-View-Thumbnail.png", itemTitle: "iPhone 16 Pro 512 GB noir batterie neuve", itemCategory: "Multimédia", itemPrice: 1200, isUrgent: true, itemDescription: "iPhone 16 Pro couleur noir, 512 GB, batterie neuve.", itemAddedDate: "2025-05-18T20:13:31+0000")
     }
     
+    /// Retourne un faux objet avec tous les champs disponibles. Pour les tests unitaires et previews SwiftUI
     static func getFakeNonUrgentItem() -> ItemViewModel {
         ItemViewModel(smallImage: "https://lessaveursdeurope.ca/cdn/shop/files/2901391F-0E9C-4B3D-B5D4-7213ECD3847F.jpg?v=1746985785&width=900", thumbImage: "https://lessaveursdeurope.ca/cdn/shop/files/2901391F-0E9C-4B3D-B5D4-7213ECD3847F.jpg?v=1746985785&width=900", itemTitle: "Pot de crème de noisettes grillées El Mordjene 700g", itemCategory: "Alimentation", itemPrice: 15, isUrgent: false, itemDescription: "Pot de crème de noisettes grillées El Mordjene 700g de la marque CEBON, goût Kinder Bueno.", itemAddedDate: "2025-05-18T20:13:31+0000")
     }
     
+    /// Retourne un faux objet avec tous les champs disponibles. Pour les tests unitaires et previews SwiftUI
     static func getFakeProItem() -> ItemViewModel {
         return ItemViewModel(smallImage: "https://www.peugeottalk.de/cms/images/avatars/7c/3752-7cfd12ec9a0125062609ecb2bae5fce78847ae7d.png", itemTitle: "Peugeot 208 GT", itemCategory: "Véhicule", itemPrice: 21000, isUrgent: false, itemDescription: "Peugeot 208 GT année 2025 bleue toutes options.", itemAddedDate: "2025-05-22T11:17:45+0000", siret: "450 897 558 00026")
     }
     
+    /// Retourne un faux objet avec tous les champs disponibles. Pour les tests unitaires et previews SwiftUI
     static func getFakeProUrgentItem() -> ItemViewModel {
         ItemViewModel(smallImage: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/258858602.jpg?k=85821b7952d70a6569617ba2ad412b3566b5d4d4dcf2c0a0e71a2d4d7042f0b5&o=&hp=1", thumbImage: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/258858602.jpg?k=85821b7952d70a6569617ba2ad412b3566b5d4d4dcf2c0a0e71a2d4d7042f0b5&o=&hp=1", itemTitle: "Appartement duplex Paris 15ème Convention", itemCategory: "Immobilier", itemPrice: 2300000, isUrgent: true, itemDescription: "Appartement 5 pièces en duplex situé dans Paris 15ème, rue de la Convention. Superficie de 175 m2, avec grande terrasse dotée d'une vue imprenable sur Paris.", itemAddedDate: "2025-05-18T20:13:31+0000", siret: "552 141 533 00018")
     }
     
+    /// Retourne une liste de faux objets avec tous les champs disponibles. Pour les tests unitaires et previews SwiftUI
     static func getFakeItems() -> [ItemViewModel] {
         return [
             ItemViewModel(smallImage: "https://img-prd-pim.poorvika.com/prodvarval/Apple-iphone-16-pro-black-titanium-128gb-Front-Back-View-Thumbnail.png", thumbImage: "https://img-prd-pim.poorvika.com/prodvarval/Apple-iphone-16-pro-black-titanium-128gb-Front-Back-View-Thumbnail.png", itemTitle: "iPhone 16 Pro 512 GB noir batterie neuve", itemCategory: "Multimédia", itemPrice: 1200, isUrgent: true, itemDescription: "iPhone 16 Pro couleur noir, 512 GB, batterie neuve.", itemAddedDate: "2025-05-18T20:13:31+0000"),

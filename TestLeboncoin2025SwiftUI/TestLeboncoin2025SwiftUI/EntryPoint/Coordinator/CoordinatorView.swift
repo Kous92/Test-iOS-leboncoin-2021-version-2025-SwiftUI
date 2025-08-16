@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// La vue racine contenant le coordinator principal par le biais d'un NavigationStack et d'un support de navigation programmatique.
 struct CoordinatorView: View {
     @State private var coordinator = AppCoordinator()
     

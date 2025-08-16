@@ -9,13 +9,15 @@ import SwiftUI
 
 struct DetailView: View {
     @Bindable var viewModel: DetailViewModel
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
                 CachedAsyncImage(url: viewModel.getImageURL(), placeholder: "leboncoinPlaceholderThumb")
-                    .aspectRatio(4/3, contentMode: .fit)
+                    .aspectRatio(4/3, contentMode: .fill)
                     .accessibilityIdentifier("productImage")
+                    .stretchy()
 
                 VStack(alignment: .leading, spacing: 15) {
                     Text(viewModel.itemViewModel.itemTitle)
@@ -49,8 +51,8 @@ struct DetailView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray, lineWidth: 1)
-                    .background(Color(.systemBackground)))
+                    .stroke(Color.gray, lineWidth: 0.5)
+                )
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Description")
@@ -85,10 +87,20 @@ struct DetailView: View {
         }
         .navigationTitle("Détail de l’annonce")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemBackground))
-        .onAppear {
-            // viewModel.loadData()
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .fontWeight(.medium)
+                }
+            }
         }
+        .toolbarBackground(.visible, for: .navigationBar)
+        .tint(.primary)
+        .background(Color(.systemBackground))
         .onDisappear {
             viewModel.backToPreviousScreen()
         }

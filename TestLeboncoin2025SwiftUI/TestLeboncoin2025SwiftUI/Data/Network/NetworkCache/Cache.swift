@@ -24,13 +24,13 @@ protocol NSCacheType: Cache {
 }
 
 extension NSCacheType {
-    /// Removes all cached content releated to the key
+    /// Supprime tout le contenu en cache en lien avec la clé
     func removeValue(key: String) {
         keysTracker.keys.remove(key)
         cache.removeObject(forKey: key as NSString)
     }
     
-    /// Clears completely the cache (all keys)
+    /// Vide complètement le cache (toutes clés confondues)
     func removeAllValues() {
         keysTracker.keys.removeAll()
         cache.removeAllObjects()
@@ -52,13 +52,13 @@ extension NSCacheType {
     
     func entry(key: String) -> CacheEntry<T>? {
         guard let entry = cache.object(forKey: key as NSString) else {
-            print("[\(Self.Type.self)] No content found for key: \(key).")
+            print("[\(Self.Type.self)] Aucun contenu trouvé pour la clé: \(key).")
             return nil
         }
         
-        // Checking cache expiration. The cached data have to be removed when expiration date is reached.
+        // Vérification de l'expiration du cache. Les données en cache doivent être supprimées après que la date d'expiration soit atteinte.
         guard !entry.isCacheExpired(after: Date()) else {
-            print("[\(Self.Type.self)] Cache expired for key: \(key), removing cached content.")
+            print("[\(Self.Type.self)] Cache expiré avec la clé: \(key), suppression du contenu en cache.")
             removeValue(key: key)
             return nil
         }
@@ -69,6 +69,6 @@ extension NSCacheType {
     func insert(_ entry: CacheEntry<T>) {
         keysTracker.keys.insert(entry.key)
         cache.setObject(entry, forKey: entry.key as NSString)
-        print("[\(Self.Type.self)] Cache set for key: \(entry.key).")
+        print("[\(Self.Type.self)] Cache défini pour la clé: \(entry.key).")
     }
 }

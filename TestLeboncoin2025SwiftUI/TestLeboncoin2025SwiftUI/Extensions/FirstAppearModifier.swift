@@ -18,6 +18,7 @@ public struct FirstAppearModifier: ViewModifier {
         self.action = action
     }
     
+    // Ici dans le cadre d'un onAppear, en mode asynchrone.
     public func body(content: Content) -> some View {
         content.task {
             guard !hasAppeared else { return }

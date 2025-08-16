@@ -30,9 +30,10 @@ final class ListCoordinator: ParentCoordinator {
         }
     }
     
+    // Important, pour le module à créer, buildModule en premier pour créer le ViewModel avec les couches associées, puis injecter le ViewModel à la vue en le récupérant via getModule()
     func start() -> some View {
         print("[ListCoordinator] Création de la vue liste.")
-        // print("Parent: \(parentCoordinator)")
+        
         builder.buildModule(testMode: testMode, coordinator: self)
         let viewModel = builder.getModule()
         return ListView(viewModel: viewModel)
@@ -40,16 +41,15 @@ final class ListCoordinator: ParentCoordinator {
     
     func goToDetailView(with item: ItemViewModel) {
         print("[ListCoordinator] Vers le DetailView")
-        // print("Parent: \(parentCoordinator)")
         parentCoordinator?.push(page: .detail(item))
     }
     
     func goToFilterView(with categories: [ItemCategoryViewModel]) {
         print("[ListCoordinator] Vers le FilterView")
-        // print("Parent: \(parentCoordinator)")
         parentCoordinator?.push(page: .filter(categories))
     }
     
+    // Via une référence d'un child coordinator, le ViewModel sera notifié pour faire une mise à jour du filtre.
     func notifyCategoryUpdate() {
         print("[ListCoordinator] Une catégorie a été sélectionnée, application du filtre...")
         builder.getModule().updateCategoryFilter()

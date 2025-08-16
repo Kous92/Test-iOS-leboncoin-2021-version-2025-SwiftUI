@@ -27,9 +27,10 @@ final class DetailCoordinator: Coordinator {
         }
     }
     
+    // Important, pour le module à créer, buildModule en premier pour créer le ViewModel avec les couches associées, puis injecter le ViewModel à la vue en le récupérant via getModule()
     func start() -> some View {
         print("[DetailCoordinator] Création de la vue détail.")
-        // print("Parent: \(parentCoordinator)")
+        
         builder.buildModule(testMode: testMode, coordinator: self)
         let viewModel = builder.getModule()
         return DetailView(viewModel: viewModel)

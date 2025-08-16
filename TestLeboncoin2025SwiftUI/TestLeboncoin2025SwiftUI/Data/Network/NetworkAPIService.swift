@@ -103,15 +103,15 @@ nonisolated final class NetworkAPIService: APIService {
         do {
             return try decoder.decode(T.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {
-            throw APIError.errorMessage("Failed to decode data from network due to missing key '\(key.stringValue)' not found – \(context.debugDescription)")
+            throw APIError.errorMessage("Échec du décodage des données téléchargées en raison d'une clé manquante '\(key.stringValue)' non trouvée – \(context.debugDescription)")
         } catch DecodingError.typeMismatch(_, let context) {
-            throw APIError.errorMessage("Failed to decode data from network due to type mismatch – \(context.debugDescription)")
+            throw APIError.errorMessage("Échec du décodage des données téléchargées en raison d'un type incompatible – \(context.debugDescription)")
         } catch DecodingError.valueNotFound(let type, let context) {
-            throw APIError.errorMessage("Failed to decode data from network due to missing \(type) value – \(context.debugDescription)")
+            throw APIError.errorMessage("Échec du décodage des données téléchargées en raison d'une valeur manquante pour le type \(type) – \(context.debugDescription)")
         } catch DecodingError.dataCorrupted(_) {
-            throw APIError.errorMessage("Failed to decode data from network from bundle because it appears to be invalid JSON")
+            throw APIError.errorMessage("Échec du décodage des données téléchargées en raison d'une source JSON invalide")
         } catch {
-            throw APIError.errorMessage("Failed to decode data from network: \(error.localizedDescription)")
+            throw APIError.errorMessage("Échec du décodage des données téléchargées: \(error.localizedDescription)")
         }
     }
 }
