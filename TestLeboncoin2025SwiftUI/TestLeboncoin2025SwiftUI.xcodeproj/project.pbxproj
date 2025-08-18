@@ -14,19 +14,11 @@
 			remoteGlobalIDString = 4B3FCB4E2E1086A800FA527E;
 			remoteInfo = TestLeboncoin2025SwiftUI;
 		};
-		4B3FCB672E1086A900FA527E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B3FCB472E1086A800FA527E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4B3FCB4E2E1086A800FA527E;
-			remoteInfo = TestLeboncoin2025SwiftUI;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4B3FCB4F2E1086A800FA527E /* TestLeboncoin2025SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestLeboncoin2025SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B3FCB5C2E1086A900FA527E /* TestLeboncoin2025SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestLeboncoin2025SwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B3FCB662E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestLeboncoin2025SwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -38,11 +30,6 @@
 		4B3FCB5F2E1086A900FA527E /* TestLeboncoin2025SwiftUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TestLeboncoin2025SwiftUITests;
-			sourceTree = "<group>";
-		};
-		4B3FCB692E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TestLeboncoin2025SwiftUIUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,13 +49,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4B3FCB632E1086A900FA527E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -77,7 +57,6 @@
 			children = (
 				4B3FCB512E1086A800FA527E /* TestLeboncoin2025SwiftUI */,
 				4B3FCB5F2E1086A900FA527E /* TestLeboncoin2025SwiftUITests */,
-				4B3FCB692E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests */,
 				4B3FCB502E1086A800FA527E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +66,6 @@
 			children = (
 				4B3FCB4F2E1086A800FA527E /* TestLeboncoin2025SwiftUI.app */,
 				4B3FCB5C2E1086A900FA527E /* TestLeboncoin2025SwiftUITests.xctest */,
-				4B3FCB662E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,29 +118,6 @@
 			productReference = 4B3FCB5C2E1086A900FA527E /* TestLeboncoin2025SwiftUITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4B3FCB652E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4B3FCB762E1086A900FA527E /* Build configuration list for PBXNativeTarget "TestLeboncoin2025SwiftUIUITests" */;
-			buildPhases = (
-				4B3FCB622E1086A900FA527E /* Sources */,
-				4B3FCB632E1086A900FA527E /* Frameworks */,
-				4B3FCB642E1086A900FA527E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4B3FCB682E1086A900FA527E /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				4B3FCB692E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests */,
-			);
-			name = TestLeboncoin2025SwiftUIUITests;
-			packageProductDependencies = (
-			);
-			productName = TestLeboncoin2025SwiftUIUITests;
-			productReference = 4B3FCB662E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,10 +132,6 @@
 						CreatedOnToolsVersion = 26.0;
 					};
 					4B3FCB5B2E1086A900FA527E = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = 4B3FCB4E2E1086A800FA527E;
-					};
-					4B3FCB652E1086A900FA527E = {
 						CreatedOnToolsVersion = 26.0;
 						TestTargetID = 4B3FCB4E2E1086A800FA527E;
 					};
@@ -202,7 +153,6 @@
 			targets = (
 				4B3FCB4E2E1086A800FA527E /* TestLeboncoin2025SwiftUI */,
 				4B3FCB5B2E1086A900FA527E /* TestLeboncoin2025SwiftUITests */,
-				4B3FCB652E1086A900FA527E /* TestLeboncoin2025SwiftUIUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +166,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4B3FCB5A2E1086A900FA527E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B3FCB642E1086A900FA527E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,13 +189,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4B3FCB622E1086A900FA527E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,11 +196,6 @@
 			isa = PBXTargetDependency;
 			target = 4B3FCB4E2E1086A800FA527E /* TestLeboncoin2025SwiftUI */;
 			targetProxy = 4B3FCB5D2E1086A900FA527E /* PBXContainerItemProxy */;
-		};
-		4B3FCB682E1086A900FA527E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4B3FCB4E2E1086A800FA527E /* TestLeboncoin2025SwiftUI */;
-			targetProxy = 4B3FCB672E1086A900FA527E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -405,7 +336,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -439,7 +370,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,14 +397,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LX6HN92HPR;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kous92.TestLeboncoin2025SwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestLeboncoin2025SwiftUI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestLeboncoin2025SwiftUI";
 			};
@@ -487,54 +418,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LX6HN92HPR;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kous92.TestLeboncoin2025SwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestLeboncoin2025SwiftUI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestLeboncoin2025SwiftUI";
-			};
-			name = Release;
-		};
-		4B3FCB772E1086A900FA527E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LX6HN92HPR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kous92.TestLeboncoin2025SwiftUIUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TestLeboncoin2025SwiftUI;
-			};
-			name = Debug;
-		};
-		4B3FCB782E1086A900FA527E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LX6HN92HPR;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kous92.TestLeboncoin2025SwiftUIUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TestLeboncoin2025SwiftUI;
 			};
 			name = Release;
 		};
@@ -564,15 +457,6 @@
 			buildConfigurations = (
 				4B3FCB742E1086A900FA527E /* Debug */,
 				4B3FCB752E1086A900FA527E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4B3FCB762E1086A900FA527E /* Build configuration list for PBXNativeTarget "TestLeboncoin2025SwiftUIUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4B3FCB772E1086A900FA527E /* Debug */,
-				4B3FCB782E1086A900FA527E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
