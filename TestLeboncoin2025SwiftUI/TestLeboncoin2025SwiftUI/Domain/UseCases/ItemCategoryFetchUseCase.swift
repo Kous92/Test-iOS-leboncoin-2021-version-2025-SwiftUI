@@ -5,14 +5,14 @@
 //  Created by Koussaïla Ben Mamar on 14/07/2025.
 //
 
-final class ItemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol {
+nonisolated final class ItemCategoryFetchUseCase: ItemCategoryFetchUseCaseProtocol {
     private let dataRepository: Repository
     
     init(dataRepository: Repository) {
         self.dataRepository = dataRepository
     }
     
-    func execute() async throws -> [ItemCategoryViewModel] {
+    @concurrent nonisolated func execute() async throws -> [ItemCategoryViewModel] {
         print("Récupération des catégories d'items")
         return handleResult(with: try await dataRepository.fetchItemCategories())
     }

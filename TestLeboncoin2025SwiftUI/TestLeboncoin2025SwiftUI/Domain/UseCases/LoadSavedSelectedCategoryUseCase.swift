@@ -5,7 +5,7 @@
 //  Created by Koussaïla Ben Mamar on 13/08/2025.
 //
 
-final class LoadSavedSelectedCategoryUseCase: LoadSavedSelectedCategoryUseCaseProtocol {
+nonisolated final class LoadSavedSelectedCategoryUseCase: LoadSavedSelectedCategoryUseCaseProtocol {
     private let itemCategorySettingsRepository: ItemCategorySettingsRepository
     
     nonisolated init(itemCategorySettingsRepository: ItemCategorySettingsRepository) {

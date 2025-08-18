@@ -5,14 +5,14 @@
 //  Created by Koussaïla Ben Mamar on 10/08/2025.
 //
 
-final class ItemListFetchUseCase: ItemListFetchUseCaseProtocol {
+nonisolated final class ItemListFetchUseCase: ItemListFetchUseCaseProtocol {
     private let dataRepository: Repository
     
     init(dataRepository: Repository) {
         self.dataRepository = dataRepository
     }
     
-    func execute() async throws -> [ItemViewModel] {
+    @concurrent nonisolated func execute() async throws -> [ItemViewModel] {
         print("Récupération des items")
         return await handleResult(with: try await dataRepository.fetchItems())
     }

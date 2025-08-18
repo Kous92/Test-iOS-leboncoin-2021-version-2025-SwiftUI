@@ -67,10 +67,6 @@ import Foundation
     
     private func setSelectedCategory(with itemCategoryId: Int) async {
         currentSelectedIndex = itemCategoryId
-        
-        await MainActor.run { [weak self] in
-            // self?.onDataUpdated?()
-        }
     }
 }
 

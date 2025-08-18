@@ -19,4 +19,14 @@ extension ItemCategory {
     static func getFakeItemCategory() -> ItemCategory {
         return ItemCategory(id: 1, name: "Alimentaire")
     }
+    
+    static func getFakeItemCategories() -> [ItemCategory] {
+        return [
+            ItemCategory(id: 1, name: "Mutimédia"),
+            ItemCategory(id: 2, name: "Mode"),
+            ItemCategory(id: 3, name: "Automobile"),
+            ItemCategory(id: 4, name: "Immobilier"),
+            ItemCategory(id: 5, name: "Alimentaire")
+        ]
+    }
 }

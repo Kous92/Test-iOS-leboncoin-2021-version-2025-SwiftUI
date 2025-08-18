@@ -52,11 +52,10 @@ final class ListBuilder: ModuleBuilder {
     }
     
     private func getDataService(testMode: Bool) -> APIService {
-        // return testMode ? NetworkMockAPIService()(forceFetchFailure: false) : NetworkAPIService()
-        return NetworkAPIService()
+        return testMode ? NetworkMockAPIService(forceFetchFailure: false) : NetworkAPIService()
     }
     
     private func getLocalSettings(testMode: Bool) -> LocalSettings {
-        return UserDefaultsLocalSettings()
+       return testMode ? MockLocalSettings(forceFailure: false) : UserDefaultsLocalSettings()
     }
 }

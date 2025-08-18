@@ -66,6 +66,7 @@ struct ListView: View {
             }
         }
         .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Rechercher")
+        .searchCancelButton(text: "Annuler", color: .label)
         .onFirstAppear {
             viewModel.fetchItemList()
         }

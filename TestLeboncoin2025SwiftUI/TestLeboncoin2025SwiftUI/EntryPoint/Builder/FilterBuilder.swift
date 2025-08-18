@@ -52,6 +52,6 @@ final class FilterBuilder: ModuleBuilder {
     }
     
     private func getLocalSettings(testMode: Bool) -> LocalSettings {
-        return UserDefaultsLocalSettings()
+        return testMode ? MockLocalSettings(forceFailure: false) : UserDefaultsLocalSettings()
     }
 }
