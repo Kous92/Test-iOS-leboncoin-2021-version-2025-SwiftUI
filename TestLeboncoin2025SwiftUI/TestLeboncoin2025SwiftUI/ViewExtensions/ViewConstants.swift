@@ -39,6 +39,7 @@ struct Constants: Sendable {
         static let specialLabel: CGFloat = isPhone() ? 12 : 24
         static let urgentRadius: CGFloat = isPhone() ? 15: 25
         static let proRadius: CGFloat = isPhone() ? 10: 20
+        static let proFrame: CGFloat = isPhone() ? 44 : 64
         static let horizontalMargin: CGFloat = isPhone() ? 10 : 20
         static let titleLabel: CGFloat = isPhone() ? 17 : 30
         static let contentLabel: CGFloat = isPhone() ? 13 : 22

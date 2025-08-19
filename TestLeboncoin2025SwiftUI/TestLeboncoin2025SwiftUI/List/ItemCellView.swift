@@ -24,12 +24,12 @@ struct ItemCellView: View {
                 .fixedSize(horizontal: false, vertical: true)
             
             Text(formatPriceInEuros(with: viewModel.itemPrice))
-                .font(.subheadline)
+                .font(.system(.subheadline))
                 .foregroundStyle(.green)
                 .bold()
             
             Text(viewModel.itemCategory)
-                .font(.caption)
+                .font(.system(.caption))
             
             if viewModel.isUrgent {
                 Text("URGENT")

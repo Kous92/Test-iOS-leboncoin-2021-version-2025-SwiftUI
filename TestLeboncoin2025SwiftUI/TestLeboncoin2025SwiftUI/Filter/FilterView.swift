@@ -30,6 +30,7 @@ struct FilterView: View {
                         }
                     }
                     .accessibilityIdentifier("category_\(itemCategory.id)")
+                    .accessibilityLabel(itemCategory.name)
                 }
             }
             .navigationTitle("Catégories")

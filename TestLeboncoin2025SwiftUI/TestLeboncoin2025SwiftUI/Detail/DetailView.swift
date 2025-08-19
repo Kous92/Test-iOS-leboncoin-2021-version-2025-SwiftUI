@@ -21,25 +21,25 @@ struct DetailView: View {
 
                 VStack(alignment: .leading, spacing: 15) {
                     Text(viewModel.itemViewModel.itemTitle)
-                        .font(.system(size: Constants.Detail.itemTitle, weight: .semibold))
+                        .font(.scalableSystem(size: Constants.Detail.itemTitle, weight: .semibold, textStyle: .title1))
                         .foregroundColor(.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityIdentifier("productTitle")
 
                     Text(formatPriceInEuros(with: viewModel.itemViewModel.itemPrice))
-                        .font(.system(size: Constants.Detail.price, weight: .semibold))
+                        .font(.scalableSystem(size: Constants.Detail.price, weight: .semibold, textStyle: .subheadline))
                         .foregroundColor(.green)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityIdentifier("productPrice")
 
                     Text(viewModel.itemViewModel.itemAddedDate.stringToFullDateFormat())
-                        .font(.system(size: Constants.Detail.contentLabel, weight: .semibold))
+                        .font(.scalableSystem(size: Constants.Detail.contentLabel, weight: .semibold, textStyle: .body))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityIdentifier("productDate")
 
                     if viewModel.isUrgentItem() {
                         Text("URGENT")
-                            .font(.system(size: Constants.Detail.specialLabel, weight: .semibold))
+                            .font(.scalableSystem(size: Constants.Detail.specialLabel, weight: .semibold, textStyle: .title2))
                             .foregroundColor(.primary)
                             .padding(.vertical, 7)
                             .frame(maxWidth: .infinity)
@@ -56,21 +56,21 @@ struct DetailView: View {
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Description")
-                        .font(.system(size: Constants.Detail.titleLabel, weight: .semibold))
+                        .font(.scalableSystem(size: Constants.Detail.titleLabel, weight: .semibold, textStyle: .title3))
                         .accessibilityIdentifier("productDescriptionTitleLabel")
 
                     Text(viewModel.itemViewModel.itemDescription)
-                        .font(.system(size: Constants.Detail.contentLabel, weight: .medium))
+                        .font(.scalableSystem(size: Constants.Detail.contentLabel, weight: .medium, textStyle: .body))
                         .accessibilityIdentifier("productDescription")
                 }
 
                 if viewModel.isProfessionalSeller(), let siret = viewModel.itemViewModel.siret {
                     HStack(spacing: 15) {
                         Text("PRO")
-                            .font(.system(size: Constants.Detail.specialLabel, weight: .semibold))
+                            .font(.scalableSystem(size: Constants.Detail.specialLabel, weight: .semibold, textStyle: .title2))
                             .foregroundColor(.white)
                             .padding(.vertical, 7)
-                            .frame(minWidth: 44)
+                            .frame(minWidth: Constants.Detail.proFrame)
                             .background(Color.blue)
                             .cornerRadius(Constants.Detail.proRadius)
                             .accessibilityIdentifier("professionalSellerTitleLabel")
@@ -85,6 +85,8 @@ struct DetailView: View {
             .padding(.horizontal, Constants.Detail.horizontalMargin)
             .padding(.top, Constants.Detail.contentViewTopMargin)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Annonce: \(viewModel.itemViewModel.itemTitle), \(viewModel.itemViewModel.itemPrice) €, publié \(viewModel.itemViewModel.itemAddedDate.stringToFullDateFormat()), \(viewModel.itemViewModel.isUrgent ? ", Urgent" : ""). Description, \(viewModel.itemViewModel.itemDescription), \(viewModel.isProfessionalSeller() ? "Vendeur professionnel" : "")")
         .navigationTitle("Détail de l’annonce")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -106,6 +108,15 @@ struct DetailView: View {
         }
     }
 }
+
+extension Font {
+    static func scalableSystem(size: CGFloat, weight: UIFont.Weight = .regular, textStyle: UIFont.TextStyle = .body) -> Font {
+        let uiFont = UIFont.systemFont(ofSize: size, weight: weight)
+        let metrics = UIFontMetrics(forTextStyle: textStyle)
+        return Font(metrics.scaledFont(for: uiFont))
+    }
+}
+
 #Preview {
     DetailView(viewModel: DetailViewModel(with: ItemViewModel.getFakeProUrgentItem()))
 }

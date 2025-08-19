@@ -14,6 +14,9 @@ import Foundation
     var itemCategories: [ItemCategoryViewModel]
     var currentSelectedIndex: Int = 0
     
+    var errorMessage = ""
+    var isError = false
+    
     // Use case
     private let loadSavedSelectedCategoryUseCase: LoadSavedSelectedCategoryUseCaseProtocol
     private let saveSelectedCategoriesUseCase: SaveSelectedCategoryUseCaseProtocol
@@ -83,6 +86,7 @@ extension FilterViewModel {
     
     private func sendErrorMessage(with errorMessage: String) {
         print("ERREUR: \(errorMessage)")
-        // coordinator?.displayErrorAlert(with: errorMessage)
+        isError = true
+        self.errorMessage = errorMessage
     }
 }
